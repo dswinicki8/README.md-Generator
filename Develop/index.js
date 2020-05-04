@@ -1,7 +1,8 @@
 const axios = require("axios");
 const inquirer = require("inquirer");
 const fs = require('fs');
-
+let githubPicture;
+let githubEmail;
 
 
 inquirer.prompt([
@@ -73,6 +74,8 @@ inquirer.prompt([
         .get("https://api.github.com/users/" + userInfo)
         .then(function (res) {
           console.log(res.data);
+          githubEmail = res.data.email;
+          githubPicture = res.data.avatar_url;
         });
     };
     searchUser();
@@ -98,10 +101,12 @@ inquirer.prompt([
   ## Tests:
   ${answers.tests}
   ## Github
+  ${githubPicture}
+  ${githubEmail}
  
 
   `;
-    searchInfo();
+    
 
 
     fs.writeFile("READMEnew.md", document, function (err, data) {
